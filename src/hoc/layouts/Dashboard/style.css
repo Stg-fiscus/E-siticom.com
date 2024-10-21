@@ -1,0 +1,5 @@
+.ant-menu-item:hover,
+.ant-menu-item-active,
+.ant-menu-item-selected {
+  color: inherit !important;
+}
