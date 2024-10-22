@@ -214,7 +214,7 @@ export const CreateOrder = ({
             </Form.Item>
             {selectedService !== "Санал хүсэлт" && (
               <Form.Item
-                label="TEAMVIEWER , ANYDESK"
+                label="TEAMVIEWER , ANYDESK ULTRAVIEWER"
                 name="programCode"
                 initialValue={initialOrder?.programCode ?? ""}
                 rules={[
