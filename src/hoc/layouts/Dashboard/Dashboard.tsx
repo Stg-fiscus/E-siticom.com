@@ -9,6 +9,8 @@ import {
   ReadOutlined,
   UnorderedListOutlined,
   UserOutlined,
+  FileTextOutlined,
+  TeamOutlined,
 } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { resetNotifications } from "@store/notifications/notificationsSlice";
@@ -17,8 +19,8 @@ import { IUser } from "@types";
 import { message } from "@utils/hooks/message";
 import { Breadcrumb, Button, Divider, Layout, Menu, Modal } from "antd";
 import { useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import "./style.css";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import "./style.css";   
 
 const { Content, Sider } = Layout;
 
@@ -51,15 +53,31 @@ const items = [
     isAllowed: (user: IUser) => user.isSite,
     icon: <MailOutlined className="text-lg" />,
   },
+  {
+    label: "Дотоод журам",
+    to: "/dashboard/internal-policy",
+    key: "Дотоод журам",
+    isAllowed: (user: IUser) => user.isSite,
+    icon: <FileTextOutlined className="text-lg" />,
+  },
+  
+  {
+    label: "Дотоод сургалт",
+    to: "/dashboard/internal-procedures",
+    key: "Дотоод сургалт",
+    isAllowed: (user: IUser) => user.isSite,
+    icon: <TeamOutlined className="text-lg" />,
+  },
 ];
+
+
 
 export const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState(false); // State to manage collapsed state
-  const breadcrumb = useAppSelector((state) => state.navigation.breadcrumb);
-  const title = useAppSelector((state) => state.navigation.title);
-  const menuKey = useAppSelector((state) => state.navigation.menuKey);
-  const user = useAppSelector((state) => state.user);
+  const [collapsed, setCollapsed] = useState(false);
+  const breadcrumb = useAppSelector((state) => state.navigation.breadcrumb || []);
+  const menuKey = useAppSelector((state) => state.navigation.menuKey || "");
+  const user = useAppSelector((state) => state.user) || {};
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -72,19 +90,17 @@ export const Dashboard = () => {
       if (item.linkTo) {
         return { title: <Link to={item.linkTo}>{item.title}</Link> };
       }
-
       return { title: item.title };
     });
   };
 
-  // Function to handle logout
   const handleLogout = () => {
     navigate("/");
     dispatch(resetUser());
     dispatch(resetNotifications());
-
     message.success("Системээс гарлаа.");
   };
+
   return (
     <Layout className="mx-[5vw] bg-transparent">
       <Breadcrumb
@@ -94,14 +110,11 @@ export const Dashboard = () => {
       <Content className="mb-4 grow-0 shadow-md">
         <Layout className="h-full min-h-[600px] items-stretch bg-primary-bg">
           <Sider
-            width={250} // Set initial width for larger screens
+            width={250}
             collapsible
             collapsed={collapsed}
             onCollapse={handleToggle}
             collapsedWidth={50}
-            // style={{
-            //   backgroundColor: theme.useToken().colorBgContainer,
-            // }}
             className="z-10"
             trigger={null}
             breakpoint="md"
@@ -112,12 +125,12 @@ export const Dashboard = () => {
               selectedKeys={[menuKey]}
             >
               <div className="mx-0.5 mt-4 flex items-center justify-between">
-                {collapsed === false && (
+                {!collapsed && (
                   <div className="ml-4 flex items-center transition duration-200">
                     <div className="mr-2 flex items-center justify-center rounded-full border border-white">
                       <UserOutlined />
                     </div>
-                    {user.name!.substring(0, 20)}
+                    {user.name?.substring(0, 20)}
                   </div>
                 )}
                 <Button
@@ -138,7 +151,7 @@ export const Dashboard = () => {
                   key={item.key}
                   icon={item.icon}
                   style={{
-                    display: item.isAllowed(user) ? "block" : "none",
+                    display: item.isAllowed?.(user) ? "block" : "none",
                   }}
                 >
                   <Link to={item.to}>{item.label}</Link>
@@ -162,17 +175,6 @@ export const Dashboard = () => {
           </Sider>
           <Content className="sm:ml-250 relative ml-0 h-full bg-white">
             <div className="mt-[2vh] overflow-hidden px-5">
-              <div className="text-xl">
-                {title}
-                {/*location.pathname.includes("course")
-                  ? "Сургалт"
-                  : location.pathname.includes("service")
-                  ? "Үйлчилгээ"
-                  : location.pathname.includes("payment")
-                  ? "Төлбөр"
-            : "Хянах самбар"*/}
-              </div>
-              <Divider />
               <Outlet />
             </div>
           </Content>

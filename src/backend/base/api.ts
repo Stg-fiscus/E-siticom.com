@@ -81,7 +81,7 @@ export class CORSApiManager implements Axios {
   ): Promise<R> {
     throw new Error("Method not implemented.");
   }
-  patchForm<T = any, R = AxiosResponse<T, any>, D = any>(
+  patchForm<T = any, R = AxiosResponse<T, any>, D = any>(       
     url: string,
     data?: D,
     config?: AxiosRequestConfig<D>,

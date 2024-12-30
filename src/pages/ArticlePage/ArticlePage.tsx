@@ -9,9 +9,9 @@ const { Title, Paragraph, Text } = Typography;
 
 const ArticleThumbnail = ({ article }: { article: IArticle }) => {
   return (
-    <Link to={`/article/${article.id}`}>
-      <img src={article.thumbnall} width={300} />
-      <span>{article.title}</span>
+    <Link to={`/article/${article.id}`} className="flex flex-col items-center">
+      <img src={article.thumbnall} width={300} className="rounded-lg" />
+      <span className="mt-2 text-center text-sm font-medium">{article.title}</span>
     </Link>
   );
 };
@@ -27,7 +27,6 @@ export const ArticlePage = () => {
     const retrieveArticle = async () => {
       try {
         const response = await client.getArticle(parseInt(id!));
-
         if (response.success) {
           setArticle(response.data!);
         } else {
@@ -47,9 +46,8 @@ export const ArticlePage = () => {
 
       try {
         const response = await client.getArticles(1, 20, article.category.id);
-
         if (response.success) {
-          setRelatedArticles(response.data!.filter((a) => a.id != article.id));
+          setRelatedArticles(response.data!.filter((a) => a.id !== article.id));
         } else {
           messageApi.error(response.message);
         }
@@ -62,10 +60,11 @@ export const ArticlePage = () => {
   }, [article]);
 
   return article ? (
-    <div className="flex items-stretch gap-4">
-      <div className="grow">
+    <div className="flex flex-col md:flex-row md:gap-6">
+      {/* Main article section */}
+      <div className="flex-1 px-4">
         {contextHolder}
-        <Title>{article?.title}</Title>
+        <Title className="text-start">{article?.title}</Title>
         <Text>
           <div dangerouslySetInnerHTML={{ __html: article?.intro ?? "" }} />
         </Text>
@@ -74,23 +73,22 @@ export const ArticlePage = () => {
           <div dangerouslySetInnerHTML={{ __html: article?.content ?? "" }} />
         </Paragraph>
       </div>
-      {relatedArticles.length > 0 ? (
-        <>
-          <Divider type="vertical" className="h-auto min-h-[70vh]" />
-          <div className="flex w-[300px] shrink-0 flex-col">
-            <Title level={3}>Related articles</Title>
-            <div className="flex flex-col gap-8">
-              {relatedArticles.map((article) => (
-                <ArticleThumbnail article={article} />
-              ))}
-            </div>
+
+    
+      {relatedArticles.length > 0 && (
+        <div className="mt-6 md:mt-0 md:w-[300px] shrink-0 flex flex-col">
+          <Title level={3} className="text-center md:text-start">
+            Related Articles
+          </Title>
+          <div className="grid grid-cols-1 gap-6">
+            {relatedArticles.map((article) => (
+              <ArticleThumbnail key={article.id} article={article} />
+            ))}
           </div>
-        </>
-      ) : (
-        <></>
+        </div>
       )}
     </div>
   ) : (
-    <>Loading...</>
+    <div className="text-center py-6">Loading...</div>
   );
 };

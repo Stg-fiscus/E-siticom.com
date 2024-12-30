@@ -6,9 +6,9 @@ import { useSimpleMessage } from "@utils/hooks/message";
 import { paginationConfig } from "@utils/props/paginationConfig";
 import { Divider, Pagination, Select } from "antd";
 import { useEffect, useState } from "react";
-import { CourseElement } from "./CourseElement/CourseElement";
+import { CourseElement } from "@pages/Course/CourseElement/CourseElement";
 
-export const Course = () => {
+export const InternalProcedures = () => {
   const [messageApi, contextHolder] = useSimpleMessage();
   const dispatch = useAppDispatch();
   const client = useClient();
@@ -115,3 +115,4 @@ export const Course = () => {
     </>
   );
 };
+

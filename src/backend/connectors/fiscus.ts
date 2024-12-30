@@ -42,6 +42,8 @@ export class FiscusConnector extends ConnectorBase {
     headers?: any,
   ): BackendPromise<any> {
     // generic POST request
+
+    // error post 
     const response = await this.api.post(endpoint, postData, {
       headers: {
         Accept: "application/json",
@@ -96,7 +98,9 @@ export class FiscusConnector extends ConnectorBase {
     postData: any,
     headers?: any,
   ): BackendPromise<any> {
-    // authenticated POST request
+    // authenticated POST request 
+
+    // error post 
     if (this.user.isClient) {
       const response = await this.post(endpoint, postData, {
         Authorization: `Bearer ${this.user.token}`,

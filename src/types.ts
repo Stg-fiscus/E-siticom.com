@@ -23,6 +23,7 @@ export interface IOrder {
   customerId: string;
   registrationTime: string;
   comment: string;
+  workNotes:string;
   state: number;
   servedUser?: string | null;
   servedUserCount?: number | null;
@@ -52,6 +53,13 @@ export interface IDateRange {
 }
 
 export interface ICourse {
+  currentTime: ReactNode;
+  duration: ReactNode;
+  playbackRate: number;
+  volume: number;
+  muted: boolean;
+  loop: boolean;
+  videoUrl: ICourse | null;
   id: number;
   title: string;
   author: string;

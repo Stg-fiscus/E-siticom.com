@@ -7,6 +7,7 @@ import {
   convertUTCDateToLocalDate,
   formatDateTime,
 } from "@utils/functions/formatDate";
+
 import { getCompanyById } from "@utils/functions/getCompanyById";
 import { useSimpleMessage } from "@utils/hooks/message";
 import { paginationConfig } from "@utils/props/paginationConfig";
@@ -211,7 +212,11 @@ export const OrderList = () => {
           open={isViewOrderModalOpen}
           footer={null}
           onCancel={() => setIsViewOrderModalOpen(false)}
-          title="Захиалга мэдээлэл"
+          title={
+            <span className="font-semibold text-gray-800">
+              Захиалгын дэлгэрэнгүй мэдээлэл 
+            </span>
+          }
         >
           <Descriptions
             items={
@@ -220,45 +225,88 @@ export const OrderList = () => {
                     {
                       key: "number",
                       label: "Дугаар",
-                      children: viewedOrder.number,
+                      children: (
+                        <span className="whitespace-normal break-words">
+                          {viewedOrder.number}
+                        </span>
+                      ),
                     },
                     {
                       key: "registrationTime",
                       label: "Хэзээ",
-                      children: formatDateTime(
-                        convertUTCDateToLocalDate(viewedOrder.registrationTime),
+                      children: (
+                        <span className="whitespace-normal break-words">
+                          {formatDateTime(
+                            convertUTCDateToLocalDate(
+                              viewedOrder.registrationTime,
+                            ),
+                          )}
+                        </span>
                       ),
                     },
                     {
                       key: "company",
                       label: "Компани",
-                      children: getCompanyById(viewedOrder.customerId),
+                      children: (
+                        <span className="whitespace-normal break-words">
+                          {getCompanyById(viewedOrder.customerId)}
+                        </span>
+                      ),
                     },
                     {
                       key: "email",
                       label: "Цахим шуудан",
-                      children: viewedOrder.email,
+                      children: (
+                        <span className="whitespace-normal break-words">
+                          {viewedOrder.email}
+                        </span>
+                      ),
                     },
                     {
                       key: "phone",
                       label: "Утас",
-                      children: viewedOrder.phone,
+                      children: (
+                        <span className="whitespace-normal break-words">
+                          {viewedOrder.phone}
+                        </span>
+                      ),
                     },
                     {
                       key: "service",
                       label: "Үйлчилгээ",
-                      children: serviceTypeById(viewedOrder.serviceType),
+                      children: (
+                        <span className="whitespace-normal break-words">
+                          {serviceTypeById(viewedOrder.serviceType)}
+                        </span>
+                      ),
                     },
                     {
                       key: "programCode",
                       label:
-                        "Программын код (ULTRAVIEWER , TEAMVIEWER , ANYDESK)",
-                      children: viewedOrder.programCode,
+                        "Программын код",
+                      children: (
+                        <span className="whitespace-normal break-words">
+                          {viewedOrder.programCode}
+                        </span>
+                      ),
+                    },
+                    {
+                      key: "workNotes",
+                      label: "Хариуцагч тайлбар",
+                      children: (
+                        <span className="whitespace-normal break-words">
+                          {viewedOrder.comment}
+                        </span>
+                      ),
                     },
                     {
                       key: "comment",
-                      label: "Дэлгэрэнгүй тайлбар",
-                      children: viewedOrder.comment,
+                      label: "Захиалагч тайлбар",
+                      children: (
+                        <span className="whitespace-normal break-words">
+                          {viewedOrder.workNotes}
+                        </span>
+                      ),
                     },
                   ]
                 : []

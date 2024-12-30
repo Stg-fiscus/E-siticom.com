@@ -21,7 +21,6 @@ interface ISearchPropsFactoryProps {
   getRecordValue: (r: IDataType) => string;
 }
 
-// Search-н render-лэх component
 export const SearchProps = ({
   dataIndex,
   searchInput,
@@ -32,94 +31,101 @@ export const SearchProps = ({
   searchedColumn,
   searchText,
   getRecordValue,
-}: ISearchPropsFactoryProps) => ({
-  filterDropdown: ({
-    setSelectedKeys,
-    selectedKeys,
-    confirm,
-    clearFilters,
-    close,
-  }: FilterDropdownProps) => (
-    <div
-      style={{
-        padding: 8,
-      }}
-      onKeyDown={(e) => e.stopPropagation()}
-    >
-      <Input
-        ref={searchInput}
-        placeholder={`Хайх утгаа оруулна уу`}
-        value={selectedKeys[0]}
-        onChange={(e) =>
-          setSelectedKeys(e.target.value ? [e.target.value] : [])
-        }
-        onPressEnter={() =>
-          handleSearch(selectedKeys as string[], confirm, dataIndex)
-        }
+}: ISearchPropsFactoryProps) => {
+  // Шүүлтүүрийн өргөнийг тохируулах
+  const filterDropdownStyle = dataIndex === "workNotes" ? { width: "200px" } : { width: "300px" };
+
+  return {
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }: FilterDropdownProps) => (
+      <div
         style={{
-          marginBottom: 8,
-          display: "block",
+          padding: 8,
+          ...filterDropdownStyle, // өргөнийг тохируулах
         }}
-      />
-      <Space>
-        <Button
-          type="primary"
-          onClick={() =>
+        onKeyDown={(e) => e.stopPropagation()}
+      >
+        <Input
+          ref={searchInput}
+          placeholder={`Хайх утгаа оруулна уу`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
             handleSearch(selectedKeys as string[], confirm, dataIndex)
           }
-          icon={<SearchOutlined />}
-          size="small"
-          className="w-[90px]"
-        >
-          Хайх
-        </Button>
-        <Button
-          onClick={() => clearFilters && handleReset(clearFilters)}
-          size="small"
-          className="w-[90px]"
-        >
-          Арилгах
-        </Button>
-        <Button
-          type="link"
-          size="small"
-          onClick={() => {
-            confirm({
-              closeDropdown: false,
-            });
-            setSearchText(selectedKeys[0] as string);
-            setSearchedColumn(dataIndex);
+          style={{
+            marginBottom: 8,
+            display: "block",
           }}
-        >
-          Шүүх
-        </Button>
-        <Button
-          type="link"
-          size="small"
-          onClick={() => {
-            close();
-          }}
-        >
-          Хаах
-        </Button>
-      </Space>
-    </div>
-  ),
-  filterIcon: <SearchOutlined />,
-  onFilter: (value: boolean | Key, record: IDataType) =>
-    getRecordValue(record)
-      .toString()
-      .toLowerCase()
-      .includes((value as string).toLowerCase()),
-  onFilterDropdownOpenChange: (visible: boolean) => {
-    if (visible) {
-      setTimeout(() => searchInput.current?.select(), 100);
-    }
-  },
-  render: (text: string) =>
-    searchedColumn === dataIndex ? (
-      <TextHighlighter text={text} search={searchText} />
-    ) : (
-      text
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() =>
+              handleSearch(selectedKeys as string[], confirm, dataIndex)
+            }
+            icon={<SearchOutlined />}
+            size="small"
+            className="w-[90px]"
+          >
+            Хайх
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            className="w-[90px]"
+          >
+            Арилгах
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({
+                closeDropdown: false,
+              });
+              setSearchText(selectedKeys[0] as string);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Шүүх
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            Хаах
+          </Button>
+        </Space>
+      </div>
     ),
-});
+    filterIcon: <SearchOutlined />,
+    onFilter: (value: boolean | Key, record: IDataType) =>
+      getRecordValue(record)
+        .toString()
+        .toLowerCase()
+        .includes((value as string).toLowerCase()),
+    onFilterDropdownOpenChange: (visible: boolean) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text: string) =>
+      searchedColumn === dataIndex ? (
+        <TextHighlighter text={text} search={searchText} />
+      ) : (
+        text
+      ),
+  };
+};
+

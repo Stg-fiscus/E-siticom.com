@@ -52,24 +52,22 @@ export const ArticleBrowse = ({ category, title }: ArticleBrowseProps) => {
 
   return (
     <>
-      <Title>{title}</Title>
+      <Title className="text-sm">{title}</Title>
       <Divider />
       <div className="h-full w-full">
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 gap-y-10 pt-4 lg:grid-cols-2 xl:grid-cols-3">
           {articles.map((article) => (
-            <div className="flex justify-center" key={article.id}>
-              <ArticleCard item={article} />
+            <div className="flex justify-center text-sm" key={article.id}>
+              <ArticleCard item={article} /> 
             </div>
           ))}
         </div>
 
-        <div className="mb-5 mt-5 w-full">
+        <div className="ml-auto w-64">
           <Pagination
-            {...paginationConfig(
-              articles ? articles.length : 0,
-              pagination,
-              setPagination,
-            )}
+            className="mb-3 ml-5"
+            size="small"
+            {...paginationConfig(pagination.total, pagination, setPagination)}
           />
         </div>
       </div>

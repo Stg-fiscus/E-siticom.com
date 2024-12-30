@@ -26,9 +26,10 @@ export const VideoList = ({
   const incrementViews = async (id: number) => {
     await client.incrementViews(id.toString());
   };
+  
   return (
     <List
-      itemLayout="vertical"
+      itemLayout="vertical" 
       dataSource={videos}
       className="overflow-x-auto md:overflow-y-auto"
       renderItem={(video) => {
@@ -60,6 +61,7 @@ export const VideoList = ({
             />
           </List.Item>
         );
+
       }}
     />
   );

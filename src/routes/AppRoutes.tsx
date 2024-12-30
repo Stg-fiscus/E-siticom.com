@@ -6,7 +6,14 @@ import { AboutUs } from "@pages/AboutUs/AboutUs";
 import { AllNotification } from "@pages/AllNotification/AllNotification";
 import { ArticlePage } from "@pages/ArticlePage/ArticlePage";
 import { Course } from "@pages/Course/Course";
-import { CourseWatch } from "@pages/CourseWatch/CourseWatch";
+
+import InternalPolicyPage from "@components/InternalPolicy/InternalPolicy";
+
+
+
+import {CourseWatch} from "@pages/CourseWatch/CourseWatch";
+
+
 import { EmailVerificationRequired } from "@pages/EmailVerificationRequired/EmailVerificationRequired";
 import { FeedbackAnswers } from "@pages/Feedbacks/FeedbackAnswers";
 import { Feedback } from "@pages/Feedbacks/Feedbacks";
@@ -31,6 +38,7 @@ import { UserRole } from "@types";
 import { Route, Routes } from "react-router-dom";
 import { Auth } from "./Auth";
 import { PrivateRoute } from "./PrivateRoute";
+import { InternalProcedures } from "@components/InternalProcedures/InternalProcedures";
 
 export const AppRoutes = () => {
   return (
@@ -45,6 +53,10 @@ export const AppRoutes = () => {
               <Route path="payment" element={<PaymentPage />} />
             </Route>
             <Route path="course" element={<Course />} />
+            <Route path="internal-policy" element={<InternalPolicyPage />} />
+            <Route path= "internal-procedures" element={<InternalProcedures/>}/> 
+            
+
             <Route path="courseWatch/:id" element={<CourseWatch />} />
             <Route path="notifications" element={<AllNotification />} />
             <Route path="profile" element={<Profile />} />

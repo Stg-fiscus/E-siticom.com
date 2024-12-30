@@ -41,8 +41,10 @@ export const CreateOrder = ({
 
   const [loading, setLoading] = useState(false);
 
-  const [detail, setDetail] = useState({} as IOrder);
 
+  
+
+  const [detail, setDetail] = useState({} as IOrder);
   const handleSubmit = async (e: IOrder) => {
     setLoading(true);
     try {
@@ -50,6 +52,12 @@ export const CreateOrder = ({
       e.serviceType = selectedService;
       e.email = localStorage.getItem("email")!;
 
+      if (!e.customerId || !e.serviceType || !e.phone || !e.comment) {
+        messageApi.error("Бүх талбаруудыг бөглөнө үү!");
+        return;
+      }
+
+      
       if (initialOrder) {
         const response = await client.updateService(
           initialOrder.id,
@@ -69,14 +77,16 @@ export const CreateOrder = ({
           messageApi.error(response.message);
         }
       } else {
+
+        // error client 
         const response = await client.addService(
           e.customerId,
           user.email!,
           e.phone,
           e.serviceType,
           e.comment,
-          e.programCode!,
-        );
+          e.programCode! 
+        ); 
 
         if (response.success) {
           messageApi.success("Хүсэлт илгээгдлээ");
@@ -86,45 +96,15 @@ export const CreateOrder = ({
           messageApi.error(response.message);
         }
       }
-
-      // setIsNewReq(false);
     } catch (err: any) {
       console.log("err", err);
       messageApi.error(err.message);
     } finally {
       setLoading(false);
     }
-
-    /*
-      // delete e.servicetype;
-      // delete e.programcode;
-      try {
-        const response = await PostDataWithAuthorization(
-          "/services/feedbackrequest",
-          e
-        );
-        if (response?.status === 201) {
-          messageApi.success("Санал хүсэлт илгээгдлээ.");
-          setRefresh((prev) => !prev);
-        }
-        handleCancel();
-        // setIsNewReq(false);
-      } catch (err: any) {
-        messageApi.success(err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-    */
   };
 
-  // Form-н өмнө бөглөгдсөн мэдээллүүдийг авах
   useEffect(() => {
-    // unuudriin date iin medeelliig avah
-    // const year = new Date().getFullYear();
-    // const month = new Date().getMonth() + 1;
-    // const day = new Date().getDate() + 1;
-
     const FetchData = async () => {
       setLoading(true);
       try {
@@ -153,7 +133,7 @@ export const CreateOrder = ({
   }, [number]);
 
   useEffect(() => {
-    form.resetFields(); // Reset the form fields when props.initialValues changes
+    form.resetFields();
   }, [detail]);
 
   return (
@@ -178,17 +158,20 @@ export const CreateOrder = ({
             onFinish={handleSubmit}
             initialValues={{
               programcode: detail ? detail.programCode : "",
-              ...detail, // Merge with props.initialValues
+              ...detail,
             }}
           >
-            <Form.Item label="Компани" name="customerId">
-              <SelectCompany
-                // width={"initial"}
+            <Form.Item label="Компани">
+
+              {/* <Input  value={user.name!}/> */} 
+              <SelectCompany            
                 companies={companies}
-                selectedCompany={initialOrder?.customerId ?? selectedCompany}
+                selectedCompany={selectedCompany}
                 setSelectedCompany={setSelectedCompany}
               />
+            
             </Form.Item>
+
             <Form.Item label="Цахим шуудан">
               <Input disabled value={user.email!} />
             </Form.Item>
@@ -214,7 +197,7 @@ export const CreateOrder = ({
             </Form.Item>
             {selectedService !== "Санал хүсэлт" && (
               <Form.Item
-                label="TEAMVIEWER , ANYDESK ULTRAVIEWER"
+                label="  ULTRAVIEWER , TEAMVIEWER , ANYDESK "
                 name="programCode"
                 initialValue={initialOrder?.programCode ?? ""}
                 rules={[
@@ -235,6 +218,7 @@ export const CreateOrder = ({
               <TextArea rows={4} />
             </Form.Item>
             {/* <Form.Item> */}
+
             <Button
               htmlType="submit"
               loading={loading}

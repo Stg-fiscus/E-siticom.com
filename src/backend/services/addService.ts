@@ -29,6 +29,8 @@ export class AddServiceMixin extends ClientBase {
     form.append("comment", comment);
     form.append("programCode", programCode);
 
+    //  error postWithAuth
+
     return await this.fiscus.postWithAuth("/createservice", form);
   }
 }

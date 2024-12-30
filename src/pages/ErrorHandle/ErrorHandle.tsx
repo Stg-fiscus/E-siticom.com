@@ -1,6 +1,8 @@
 import { Logo } from "@components/Logo/Logo";
 import { Button } from "antd";
 
+
+
 interface IErrorHandleProps {
   error: any;
   resetErrorBoundary: () => void;

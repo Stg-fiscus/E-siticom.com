@@ -1,20 +1,21 @@
-import { FilterProps } from "@utils/props/FilterProps";
-import { SearchProps } from "@utils/props/SearchProps";
-import { getStateText } from "@utils/functions/getStateText";
-import { IconButton } from "@components/IconButton/IconButton";
-import { State } from "../State/State";
-import { Tooltip } from "antd";
-import { CancelIcon } from "@icons/CancelIcon";
-import { Dispatch, SetStateAction } from "react";
-import { ICompany, IDataType, IOrder } from "@types";
-import { ColumnType } from "antd/es/table";
-import { getCompanyById } from "@utils/functions/getCompanyById";
 import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Client } from "@backend/client";
+import { IconButton } from "@components/IconButton/IconButton";
+import { CancelIcon } from "@icons/CancelIcon";
+import { ICompany, IDataType, IOrder } from "@types";
 import {
   convertUTCDateToLocalDate,
   formatDateTime,
 } from "@utils/functions/formatDate";
+
+import { getCompanyById } from "@utils/functions/getCompanyById";
+import { getStateText } from "@utils/functions/getStateText";
+import { FilterProps } from "@utils/props/FilterProps";
+import { SearchProps } from "@utils/props/SearchProps";
+import { Modal, Tooltip } from "antd";
+import { ColumnType } from "antd/es/table";
+import { Dispatch, SetStateAction } from "react";
+import { State } from "../State/State";
 
 interface IDeleteOrderParams {
   id: number;
@@ -46,6 +47,31 @@ const deleteOrder = async ({
   } catch (err: any) {
     messageError(err.message);
   }
+};
+
+const confirmDeleteOrder = (
+  record: IOrder,
+  setRefresh: Dispatch<SetStateAction<boolean>>,
+  closeModal: () => void,
+  client: Client,
+  messageSuccess: (m: string) => void,
+  messageError: (m: string) => void,
+) => {
+  Modal.confirm({
+    title: "Та захиалгаа цуцлахдаа итгэлтэй байна уу?",
+    okText: "Цуцлах",
+    cancelText: "Болих",
+    onOk: () => {
+      deleteOrder({
+        id: record.id,
+        setRefresh,
+        closeModal,
+        client,
+        messageSuccess,
+        messageError,
+      });
+    },
+  });
 };
 
 interface IOrderColumnProps {
@@ -86,7 +112,7 @@ export const Columns = ({
   searchedColumn,
   searchText,
   uniqueStates,
-  uniqueUsers,
+  uniqueUsers, 
   setRefresh,
   companies,
   client,
@@ -99,7 +125,6 @@ export const Columns = ({
     key: "1",
     title: "Огноо",
     dataIndex: "registrationTime",
-    // width: "15%",
     render: (text: string) => formatDateTime(convertUTCDateToLocalDate(text)),
     sorter: (record1: IOrder, record2: IOrder) => {
       return (
@@ -107,12 +132,75 @@ export const Columns = ({
         new Date(record2.registrationTime).valueOf()
       );
     },
+    width: 180,
   },
   {
     key: "2",
+    title: "Компани",
+    dataIndex: "customerId",
+    render: (customerId) => getCompanyById(customerId),
+
+    ...FilterProps({
+      filterElements: companies.map(({ name }) => name),
+      filter: "customerId",
+      getRecordValue: (r: IDataType) =>
+        getCompanyById((r as IOrder).customerId),
+    }),
+    width: 320,
+  },
+
+  {
+    key: "3",
+    title: "Захиалга",
+    dataIndex: "workNotes",
+
+    ...SearchProps({
+      dataIndex: "workNotes",
+      searchInput: searchInput,
+      handleSearch: handleSearch,
+      handleReset: handleReset,
+      setSearchText: setSearchText,
+      setSearchedColumn: setSearchedColumn,
+      searchedColumn: searchedColumn,
+      searchText: searchText,
+      getRecordValue: (record: IDataType) => (record as IOrder).workNotes,
+    }),
+    width: 200,
+  },
+
+  {
+    key: "4",
+    title: "Төлөв",
+    dataIndex: "state",
+    render: (state, record) => <State data={state} />,
+
+    ...FilterProps({
+      filterElements: uniqueStates,
+      filter: "state",
+      option: getStateText,
+      getRecordValue: (r: IDataType) => (r as IOrder).state,
+    }),
+    width: 200,
+  },
+  {
+    key: "5",
+    title: "Хариуцсан",
+    dataIndex: "servedUser",
+
+    ...FilterProps({
+      filterElements: uniqueUsers,
+      filter: "servedUser",
+      getRecordValue: (r: IDataType) => (r as IOrder).servedUser,
+    }),
+    width: 200,
+  },
+
+  
+  {
+    key: "6",
     title: "Тайлбар",
     dataIndex: "comment",
-    // width: "40%",
+
     ...SearchProps({
       dataIndex: "comment",
       searchInput: searchInput,
@@ -124,45 +212,10 @@ export const Columns = ({
       searchText: searchText,
       getRecordValue: (record: IDataType) => (record as IOrder).comment,
     }),
+    width: 320,
   },
   {
-    key: "3",
-    title: "Төлөв",
-    dataIndex: "state",
-    // width: "15%",
-    render: (state, record) => <State data={state} />,
-    ...FilterProps({
-      filterElements: uniqueStates,
-      filter: "state",
-      option: getStateText,
-      getRecordValue: (r: IDataType) => (r as IOrder).state,
-    }),
-  },
-  {
-    key: "4",
-    title: "Хариуцсан",
-    dataIndex: "servedUser",
-    // width: "15%",
-    ...FilterProps({
-      filterElements: uniqueUsers,
-      filter: "servedUser",
-      getRecordValue: (r: IDataType) => (r as IOrder).servedUser,
-    }),
-  },
-  {
-    key: "5",
-    title: "Компани",
-    dataIndex: "customerId",
-    render: (customerId) => getCompanyById(customerId),
-    ...FilterProps({
-      filterElements: companies.map(({ name }) => name),
-      filter: "customerId",
-      getRecordValue: (r: IDataType) =>
-        getCompanyById((r as IOrder).customerId),
-    }),
-  },
-  {
-    key: "6",
+    key: "7",
     title: "Action",
     render: (_, record) => {
       return (
@@ -183,14 +236,14 @@ export const Columns = ({
               <div className="h-5 w-5">
                 <IconButton
                   onClick={() => {
-                    deleteOrder({
-                      id: record.id,
-                      setRefresh: setRefresh,
-                      closeModal: () => setModal(false),
+                    confirmDeleteOrder(
+                      record,
+                      setRefresh,
+                      () => setModal(false),
                       client,
                       messageSuccess,
                       messageError,
-                    });
+                    );
                   }}
                 >
                   <CancelIcon />
@@ -209,7 +262,7 @@ export const Columns = ({
                     setType(record.serviceType);
                   }}
                 >
-                  <EditOutlined />
+                  <EditOutlined /> 
                 </IconButton>
               </div>
             </Tooltip>
@@ -217,33 +270,6 @@ export const Columns = ({
         </div>
       );
     },
+    width: 120,
   },
-  // {
-  //   key: "5",
-  //   title: "Цуцлах",
-  //   dataIndex: "servedUser",
-  //   // width: "10%",
-  //   render: (user, record) =>
-  //     !user && (
-  //       <div className="w-full flex justify-center">
-  //         <div className="w-5 h-5">
-  //           <IconButton
-  //              onClick={() => {
-  //     deleteOrder({
-  //       type:
-  //         record.serviceType === "Санал хүсэлт"
-  //           ? 0
-  //           : record.serviceType,
-  //       number: record.number,
-  //       setRefresh: setRefresh,
-  //       closeModal: () => setModal(false),
-  //     });
-  //   }}
-  // >
-  //   <CancelIcon/>
-  // </IconButton>
-  //         </div>
-  //       </div>
-  //     ),
-  // },
 ];

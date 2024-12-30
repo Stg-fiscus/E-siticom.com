@@ -58,9 +58,9 @@ export const CourseDrawer = ({
             onClose();
           }}
         >
-          Одоо үзье
+          Сургалт үзэх
         </Button>
-        <Button onClick={onClose}>Дараа үзье</Button>
+        <Button onClick={onClose}>Дараа үзэх</Button>
       </div>
     </Drawer>
   );

@@ -23,7 +23,7 @@ export const OrderData = () => {
       servedUserCount: 0,
       serviceType: 2,
       programCode: "12354",
-      phone: "12345678",
+      phone: "78",
       email: "m.erdenebayar.siticom@gmail.com",
     },
     {

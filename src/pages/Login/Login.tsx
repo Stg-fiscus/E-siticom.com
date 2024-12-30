@@ -21,58 +21,58 @@ export const Login = () => {
 
   const handleSubmit = async (values: ILoginRequestParams) => {
     setLoading(true);
+    setErrMsg(""); // Reset the error message
     try {
       // Validate all fields
       await form.validateFields();
       values.email = values.email.toLowerCase();
-      // If all validations pass, submit the form
+
+      // Submit the form
       const response = await client.login(values.email, values.password);
 
       if (response.success) {
         message.success("Амжилттай нэвтэрлээ!");
-
-        if (locationState) {
-          navigate(
-            `${locationState.redirectTo.pathname}${locationState.redirectTo.search}`,
-          );
-        } else {
-          navigate("/dashboard");
-        }
-      } else if (response.status == BackendStatus.EFORBIDDEN) {
+        navigate(
+          locationState
+            ? `${locationState.redirectTo.pathname}${locationState.redirectTo.search}`
+            : "/dashboard",
+        );
+      } else if (response.status === BackendStatus.EFORBIDDEN) {
         navigate(
           `/emailVerificationRequired?email=${encodeURIComponent(values.email)}`,
         );
       } else {
-        message.error(response.message);
+        message.error(response.message || "Нэвтрэхэд алдаа гарлаа!");
       }
     } catch (error: any) {
       console.error(error);
-      if (error.response.status === 403) {
+      if (error.response?.status === 403) {
         navigate(
           `/emailVerificationRequired?email=${encodeURIComponent(values.email)}`,
         );
       } else if (error.code === "ECONNABORTED") {
-        // Connection timeout occurred
         setErrMsg("Холболт хугацаа дууссан");
       } else {
-        // Other errors
-        message.error(error.response.data.data.error);
+        const errorMsg =
+          error?.response?.data?.data?.error || "Нэвтрэхэд алдаа гарлаа!";
+        message.error(errorMsg);
       }
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <>
       <Form
         layout="vertical"
         form={form}
-        onFinish={(e) => handleSubmit(e)}
+        onFinish={handleSubmit}
         onValuesChange={() => setErrMsg("")}
       >
         <h2 className="mb-4 text-center text-2xl">Нэвтрэх</h2>
-
         <Divider />
+
         <Form.Item
           label="Цахим шуудан"
           name="email"
@@ -80,24 +80,16 @@ export const Login = () => {
         >
           <Input type="email" />
         </Form.Item>
+
         <Form.Item
           label="Нууц үг"
           name="password"
           rules={[
-            {
-              required: true,
-              message: "Нууц үгээ оруулна уу!",
-            },
+            { required: true, message: "Нууц үгээ оруулна уу!" },
             {
               min: 6,
               message: "Нууц үг нь хамгийн багадаа 6 тэмдэгтээс тогтох ёстой!",
             },
-            // {
-            //   pattern:
-            //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/,
-            //   message:
-            //     "Хамгийн багадаа нэг том үсэг, нэг тоо, нэг тусгай тэмдэгт агуулна!",
-            // },
           ]}
         >
           <Input.Password
@@ -106,11 +98,13 @@ export const Login = () => {
             }
           />
         </Form.Item>
+
         <Form.Item>
           <Link className="text-link" to="/forgetpassword">
             Нууц үг мартсан
           </Link>
         </Form.Item>
+
         <Form.Item>
           <div className="text-red-500">{errMsg}</div>
           <Button
@@ -122,6 +116,7 @@ export const Login = () => {
             Нэвтрэх
           </Button>
         </Form.Item>
+
         <Form.Item className="text-center text-gray-400">
           Бүртгэл хийгдээгүй бол{" "}
           <Link className="text-link" to="/register">

@@ -22,7 +22,11 @@ interface Client
     FeedbackMixin,
     PageTokensMixin {}
 
-class Client extends ClientBase {}
+class Client extends ClientBase {
+  getCompany() {
+    throw new Error("Method not implemented.");
+  }
+}
 
 applyMixins(Client, [
   ArticlesMixin,
