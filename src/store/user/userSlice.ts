@@ -35,6 +35,8 @@ const _setUser = (state: Draft<IUser>, action: PayloadAction<IUser>) => {
   state.isAnonymous = payload.isAnonymous;
   state.isClient = payload.isClient;
   state.isSite = payload.isSite;
+  state.isEmployee = payload.isEmployee;
+  state.isAccountant = payload.isAccountant;
   state.companies = payload.companies;
   state.email = payload.email;
   state.name = payload.name;
