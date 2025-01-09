@@ -9,6 +9,8 @@ const role2enum = (role: ResponseRole) => {
   switch (role.id) {
     case 4:
       return UserRole.client;
+    case 7:
+      return UserRole.employee;
     default:
       return UserRole.site;
   }
@@ -23,11 +25,7 @@ export const getRolesFromStorage = () => {
     return [UserRole.client, UserRole.site];
   }
 
-  if (localStorage.getItem("token")) {
-    return [UserRole.site];
-  }
-
-  return [];
+  return localStorage.getItem("role")?.split(",") as UserRole[] || [];
 };
 
 export const hasRole = (roles: UserRole[], role: UserRole) => {
@@ -35,9 +33,5 @@ export const hasRole = (roles: UserRole[], role: UserRole) => {
 };
 
 export const roles2string = (roles: UserRole[]) => {
-  if (hasRole(roles, UserRole.client)) {
-    return "client";
-  }
-
-  return "";
+  return roles.join(",");
 };
