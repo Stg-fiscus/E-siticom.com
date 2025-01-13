@@ -16,7 +16,7 @@ export const InternalProcedures = () => {
   const [categories, setCategories] = useState<ICourseCategory[]>([]);
   const title = useAppSelector((state) => state.navigation.title);
 
-  dispatch(setNavigationDashboardSubpage("Сургалт"));
+  dispatch(setNavigationDashboardSubpage("Дотоод сургалт"));
 
   const [videos, setVideos] = useState<IParentCourse[]>([]);
   const [pagination, setPagination] = useState({

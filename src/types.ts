@@ -92,6 +92,7 @@ export interface ICompanyTags {
 export enum UserRole {
   site = "site",
   client = "client",
+  employee = "employee",
 }
 
 export interface IUser {
@@ -99,6 +100,7 @@ export interface IUser {
   roles: UserRole[];
   isSite: boolean;
   isClient: boolean;
+  isEmployee: boolean;
   isAnonymous: boolean;
   email?: string;
   name?: string;

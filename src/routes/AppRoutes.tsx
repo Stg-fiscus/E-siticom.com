@@ -53,10 +53,10 @@ export const AppRoutes = () => {
               <Route path="payment" element={<PaymentPage />} />
             </Route>
             <Route path="course" element={<Course />} />
-            <Route path="internal-policy" element={<InternalPolicyPage />} />
-            <Route path= "internal-procedures" element={<InternalProcedures/>}/> 
-            
-
+            <Route element={<Auth allowedRole={UserRole.employee} />}>
+              <Route path="internal-policy" element={<InternalPolicyPage />} />
+              <Route path= "internal-procedures" element={<InternalProcedures/>}/> 
+            </Route>
             <Route path="courseWatch/:id" element={<CourseWatch />} />
             <Route path="notifications" element={<AllNotification />} />
             <Route path="profile" element={<Profile />} />

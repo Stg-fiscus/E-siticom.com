@@ -31,6 +31,7 @@ export class LoginMixin extends ClientBase {
           isAnonymous: false,
           isClient: hasRole(roles, UserRole.client),
           isSite: hasRole(roles, UserRole.site),
+          isEmployee: hasRole(roles, UserRole.employee),
           companies: hasRole(roles, UserRole.client) ? data.orgs : [],
           isAccountant:
             hasRole(roles, UserRole.client) && getIsAccountant(data.orgs),

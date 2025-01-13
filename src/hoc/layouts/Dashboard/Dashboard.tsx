@@ -57,7 +57,7 @@ const items = [
     label: "Дотоод журам",
     to: "/dashboard/internal-policy",
     key: "Дотоод журам",
-    isAllowed: (user: IUser) => user.isSite,
+    isAllowed: (user: IUser) => user.isEmployee,
     icon: <FileTextOutlined className="text-lg" />,
   },
   
@@ -65,7 +65,7 @@ const items = [
     label: "Дотоод сургалт",
     to: "/dashboard/internal-procedures",
     key: "Дотоод сургалт",
-    isAllowed: (user: IUser) => user.isSite,
+    isAllowed: (user: IUser) => user.isEmployee,
     icon: <TeamOutlined className="text-lg" />,
   },
 ];

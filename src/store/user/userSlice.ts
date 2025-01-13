@@ -17,6 +17,7 @@ const initialState: IUser = {
   isAnonymous: roles.length == 0,
   isClient: hasRole(roles, UserRole.client),
   isSite: hasRole(roles, UserRole.site),
+  isEmployee: hasRole(roles, UserRole.employee),
   token: localStorage.getItem("token") ?? undefined,
   name: localStorage.getItem("name") ?? undefined,
   email: localStorage.getItem("email") ?? undefined,
@@ -34,6 +35,8 @@ const _setUser = (state: Draft<IUser>, action: PayloadAction<IUser>) => {
   state.isAnonymous = payload.isAnonymous;
   state.isClient = payload.isClient;
   state.isSite = payload.isSite;
+  state.isEmployee = payload.isEmployee;
+  state.isAccountant = payload.isAccountant;
   state.companies = payload.companies;
   state.email = payload.email;
   state.name = payload.name;
@@ -77,6 +80,7 @@ export const userSlice = createSlice({
           isAnonymous: true,
           isClient: false,
           isSite: false,
+          isEmployee: false,
           isAccountant: false,
         },
         type: "RESET_USER",
