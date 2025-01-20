@@ -1,21 +1,32 @@
-import { Button, Descriptions, Divider } from "antd";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { useAppDispatch } from "@store/hooks";
 import { setNavigationDashboardSubpage } from "@store/navigation/navigationSlice";
-import { Link } from "react-router-dom";
+import { useClient } from "@backend/client";
+import { useEffect, useState } from "react";
+import { IPageToken } from "@types";
 
 const InternalPolicyPage = () => {
   const dispatch = useAppDispatch();
   dispatch(setNavigationDashboardSubpage("Дотоод журам"));
 
+  const client = useClient();
+  const [token, setToken] = useState<IPageToken | null>(null);
+
+  useEffect(() => {
+    const fetchTokens = async () => {
+      const res = await client.getTokens("internal_policy");
+
+      if (res.success) {
+        setToken(res.data![0]);
+      }
+    };
+    fetchTokens();
+  }, []);
+
   return (
     <div className="p-7">
-      <Divider/>
-    
-
-      {/* Content area */}
-        <Descriptions.Item label="Боловсруулалт">
-          Боловсруулалт хийгдэж байна.
-        </Descriptions.Item>
+      {token ? (
+        <iframe src={`https://docs.google.com/gview?url=${token.image}&embedded=true`} className="w-full h-[75vh]"></iframe>
+      ) : <p>Loading...</p>}
     </div> 
   );
 };
