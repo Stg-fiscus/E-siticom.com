@@ -38,7 +38,7 @@ import { UserRole } from "@types";
 import { Route, Routes } from "react-router-dom";
 import { Auth } from "./Auth";
 import { PrivateRoute } from "./PrivateRoute";
-import { InternalProcedures } from "@components/InternalProcedures/InternalProcedures";
+import InternalProcedures from "@components/InternalProcedures/InternalProcedures";
 
 export const AppRoutes = () => {
   return (
