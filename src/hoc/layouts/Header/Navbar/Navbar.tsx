@@ -5,22 +5,20 @@ import MediaQuery from "react-responsive";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const items = [
-  { label: "Бидний тухай", key: "/aboutUs" },
+  {label:"", key:""},
   { label: "Мэдлэгийн сан", key: "/knowledge" },
   { label: "Мэдээ, мэдээлэл", key: "/information" },
-  
-];  
+];
 
-
-// Нэвтэрсэн үед нэмэлт линкүүд 
+// Нэвтэрсэн үед нэмэлт линкүүд
 const additionalItems = [
   { label: "Захиалга", key: "/dashboard/service" },
   { label: "Сургалт", key: "/dashboard/course" },
-];  
+];
 
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 

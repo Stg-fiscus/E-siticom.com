@@ -2,15 +2,12 @@ import { AnonymousPageLayout } from "@layouts/AnonymousPageLayout/AnonymousPageL
 import { Dashboard } from "@layouts/Dashboard/Dashboard";
 import { LoginTemplate } from "@layouts/LoginTemplate/LoginTemplate";
 import { SharedLayout } from "@layouts/SharedLayout/SharedLayout";
-import { AboutUs } from "@pages/AboutUs/AboutUs";
+// import { AboutUs } from "@pages/AboutUs/AboutUs";
 import { AllNotification } from "@pages/AllNotification/AllNotification";
 import { ArticlePage } from "@pages/ArticlePage/ArticlePage";
 import { Course } from "@pages/Course/Course";
 
 import InternalPolicyPage from "@components/InternalPolicy/InternalPolicy";
-
-
-
 import {CourseWatch} from "@pages/CourseWatch/CourseWatch";
 
 
@@ -65,12 +62,14 @@ export const AppRoutes = () => {
             <Route path="feedback/:id" element={<FeedbackAnswers />} />
           </Route>
         </Route>
+
         <Route element={<AnonymousPageLayout />}>
-          <Route path="aboutUs" element={<AboutUs />} />
+          {/* <Route path="aboutUs" element={<AboutUs />} /> */}
           <Route path="knowledge" element={<Knowledge />} />
           <Route path="information" element={<Information />} />
           <Route path="article/:id" element={<ArticlePage />} />
         </Route>
+
         <Route element={<LoginTemplate />}>
           <Route path="login" element={<Login />} />
           <Route path="forgetPassword" element={<ForgetPassword />} />

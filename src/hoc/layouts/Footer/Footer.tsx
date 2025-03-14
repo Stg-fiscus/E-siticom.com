@@ -46,4 +46,62 @@ export const Footer = () => {
       </div>
     </AntdFooter>
   );
-};
+};              
+
+
+
+
+
+// import { FaFacebook, FaPinterest, FaInstagram } from "react-icons/fa";
+
+// export const Footer = () => {
+//   return (
+//     <footer className="flex flex-col items-center text-center py-8 space-y-6 bg-gray-100">
+     
+//       <div className="flex items-center justify-between w-full px-10">
+//         <div className="border-t w-2/5" style={{borderColor:"#555659"}}></div>
+//         <div className="border-t w-2/5" style={{borderColor:"#555659"}}></div>
+     
+//       </div>
+
+
+//       <div className="flex flex-col items-center space-y-4">
+//         <h2 className="text-lg font-medium">Бидэнтэй холбогдох</h2>
+//         <div className="flex space-x-3 gap-10">
+    
+//           <a href="https://e-siticom.com/" className="text-black hover:text-gray-600">
+//             <FaFacebook size={30} />
+//           </a>
+//           <a href="#" className="text-black hover:text-gray-600">         
+//             <FaPinterest size={30} />
+//           </a>
+//           <a href="#" className="text-black hover:text-gray-600">
+//             <FaInstagram size={30} />
+//           </a>
+//         </div>
+//         <p className="uppercase text-xs tracking-wider text-gray-700">
+//           Weekly Newsletter
+//         </p>
+      
+//         <div className="flex flex-col space-y-2 w-64">
+//           <input
+//             type="email"
+//             placeholder="name@email.com"
+//             className="border border-gray-400 py-1 px-3 text-sm text-center focus:outline-none"
+//           />
+//           <button className="bg-black text-white text-sm py-1 px-4 uppercase hover:bg-gray-800">
+//             Subscribe
+//           </button>
+//         </div>
+//       </div>
+
+    
+//       <p className="text-xs text-gray-500">© 2025 он</p>
+//     </footer>
+//   );
+// };
+
+
+
+
+

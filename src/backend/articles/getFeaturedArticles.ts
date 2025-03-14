@@ -7,6 +7,6 @@ export class GetFeaturedArticlesMixin extends ClientBase {
    * @returns List of featured articles
    */
   public async getFeaturedArticles(): BackendPromise<IArticle[]> {
-    return await this.site.get("/feateredArticles");
+    return await this.site.get("/feateredArticles");    
   }
 }

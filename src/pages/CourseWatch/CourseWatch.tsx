@@ -7,7 +7,7 @@ import { stripHtmlTags } from "@utils/functions/stripHtmlTags";
 import { useSimpleMessage } from "@utils/hooks/message";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
-import { FaBackward, FaForward } from "react-icons/fa";
+// import { FaBackward, FaForward } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { VideoList } from "./VideoList/VideoList";
 
@@ -23,6 +23,9 @@ export const CourseWatch = () => {
   const [currentId, setCurrentId] = useState(id as string);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isControlVisible, setIsControlVisible] = useState(true);
+
+
+  // aldaanii medegdelee try catch ashiglahin orond AsyncHandler ashiglaj bas bolno iluu hylbar amar 
 
   useEffect(() => {
     const getVideo = async () => {

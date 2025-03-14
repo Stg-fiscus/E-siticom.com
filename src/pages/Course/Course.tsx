@@ -74,9 +74,9 @@ export const Course = () => {
       {contextHolder}
       <div className="mb-1 flex flex-col gap-1 pb-1">
         <div className="flex items-center justify-between">
-          <div className="mr-12 flex items-center ml-auto">
+          <div className="ml-auto mr-12 flex items-center">
             <Select
-              className="size-7 w-64"
+              className="w-full sm:w-64"
               showSearch
               placeholder="Ангилал"
               optionFilterProp="label"
@@ -87,7 +87,6 @@ export const Course = () => {
                 label: cat.name,
                 value: cat.id,
               }))}
-              style={{ minWidth: "120px", height: "26px" }}
             />
           </div>
         </div>
@@ -95,18 +94,21 @@ export const Course = () => {
 
       <Divider />
 
-      <div className="h-full w-full">
-        <div className="grid grid-cols-1 gap-5 gap-y-10 pt-4 lg:grid-cols-2 xl:grid-cols-3">
+      <div className="h-full w-full space-y-6">
+        <div className="grid grid-cols-1 justify-items-center gap-x-5 gap-y-10 pt-4 sm:grid-cols-2 md:grid-cols-3 ">
           {videos.map((video) => (
-            <div className="flex justify-center" key={video.id}>
+            <div
+              key={video.id}
+              className="w-full max-w-[250px] sm:max-w-[280px] md:max-w-[300px] lg:max-w-[320px]"
+            >
               <CourseElement video={video} />
             </div>
           ))}
         </div>
 
-        <div className="w-64 ml-auto">
+        <div className="flex w-full justify-center lg:justify-end">
           <Pagination
-            className="ml-5 mb-3"
+            className="mb-3 ml-0 lg:ml-5"
             size="small"
             {...paginationConfig(pagination.total, pagination, setPagination)}
           />

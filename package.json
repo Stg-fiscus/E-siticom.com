@@ -19,7 +19,8 @@
     "antd": "^5.22.3",
     "axios": "^1.6.5",
     "cache-ts": "^1.0.0",
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.479.0",
     "next-icon": "^0.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -34,7 +35,8 @@
     "react-router-dom": "^6.21.2",
     "redux": "^5.0.1",
     "screenfull": "^6.0.2",
-    "swiper": "^11.1.1"
+    "swiper": "^11.1.1",
+    "tailwind-merge": "^3.0.2"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",

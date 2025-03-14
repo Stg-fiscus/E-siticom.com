@@ -38,7 +38,6 @@ export const CreateOrder = ({
 
   const [selectedService, setSelectedService] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("");
-
   const [loading, setLoading] = useState(false);
 
 
@@ -197,7 +196,7 @@ export const CreateOrder = ({
             </Form.Item>
             {selectedService !== "Санал хүсэлт" && (
               <Form.Item
-                label="  ULTRAVIEWER , TEAMVIEWER , ANYDESK "
+                label="  ULTRAVIEWER , TEAMVIEWER "
                 name="programCode"
                 initialValue={initialOrder?.programCode ?? ""}
                 rules={[

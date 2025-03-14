@@ -38,9 +38,11 @@ export const SharedLayout = () => {
     <Maintenance />
   ) : (
     <Layout className="flex min-h-screen flex-col bg-secondary-bg">
-      <Header />
-      <Content className="flex grow flex-col">
-        <Outlet />
+      <Header />  
+      <Content className="flex flex-grow flex-col">
+        <div className="h-full w-full">
+          <Outlet />
+        </div>
       </Content>
       <Footer />
     </Layout>

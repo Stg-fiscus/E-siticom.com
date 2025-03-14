@@ -1,4 +1,5 @@
 import type { GetProp, UploadProps } from "antd";
+import { JSX } from "react/jsx-runtime";
 
 export interface INotification {
   message: string;
@@ -150,7 +151,11 @@ export type PaginatedResponse<T> = BackendResponse<Paginated<T>>;
 export type PaginatedPromise<T> = Promise<PaginatedResponse<T>>;
 
 export type IDataType = IOrder | IPayment;
+
+
 export interface IArticle {
+  map(arg0: (item: any, index: any) => JSX.Element): import("react").ReactNode;
+  createdAt: string | number | Date;
   id: number;
   title: string;
   thumbnall: string;

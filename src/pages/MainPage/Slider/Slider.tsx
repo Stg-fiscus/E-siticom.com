@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // Import Swiper React components
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-import { Pagination, Navigation, Autoplay } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-import "./index.css";
-import { ISliderItem } from "@types";
 import { useClient } from "@backend/client";
+import { ISliderItem } from "@types";
+import "./index.css";
 
 export const Slider = () => {
   const [sliderItems, setSliderItems] = useState([] as ISliderItem[]);
@@ -31,8 +31,6 @@ export const Slider = () => {
     fetchData();
   }, []);
 
-  // 100 x 30 baih yostoi
-  // Delgetsendee bagtahgu bsan uchraas urguniig 99.1vw urttai bolgov
   return (
     <div className="w-full">
       {sliderItems && (
@@ -45,7 +43,7 @@ export const Slider = () => {
             disableOnInteraction: false,
           }}
           modules={[Pagination, Navigation, Autoplay]}
-          className="h-[40vw] w-[99.1vw] lg:h-[25vw]"
+          className="h-[70vw] w-[99.1vw] lg:h-[30vw]"
         >
           {sliderItems.map((image, index) => (
             <SwiperSlide className="w-full" key={index}>
@@ -53,7 +51,7 @@ export const Slider = () => {
                 key={index}
                 src={image.image}
                 alt={image.id}
-                className="h-[40vw] w-[99.1vw] object-cover lg:h-[25vw]"
+                className="h-[70vw] w-[99.1vw] lg:h-[30vw]"
               />
             </SwiperSlide>
           ))}

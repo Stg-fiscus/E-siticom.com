@@ -15,18 +15,19 @@ export const Header = () => {
   return (
     <>
       {contextHolder}
-      <AntdHeader className="sticky top-0 z-50 flex h-[80px] w-full items-center justify-between bg-primary-bg pe-[10%] ps-[10%] text-primary-txt shadow-sm">
-        <div className="flex items-center gap-x-4">
+      <AntdHeader className="sticky top-0 z-50 flex h-[80px] w-full items-center justify-between bg-primary-bg pe-[11%] ps-[11%] text-primary-txt shadow-sm">
+        <div className="flex items-center gap-10">
           <Logo />
           <Navbar />
         </div>
 
         {!user.isAnonymous ? (
           <AuthenticatedDropDown
-            name={user.name ?? ""}
+            name={user.name ?? "" }
             email={user.email ?? ""}
             success={notificationApi.success}
             // notificationCount={localStorage.getItem("notificationCount")}
+            
           />
         ) : (
           <UnauthenticateSection />

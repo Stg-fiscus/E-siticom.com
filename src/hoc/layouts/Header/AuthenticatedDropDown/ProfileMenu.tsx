@@ -41,7 +41,6 @@ export const ProfileMenu = ({ name, email, handleLogout }: IProfileMenu) => {
                 <div>{email}</div>
               </div>
             </div>
-            {/* Using style instead of tailwind since classes are appended to the end, causing them not to override antd's styles */}
             {React.cloneElement(menu as ReactElement, {
               style: {
                 background: "transparent",
@@ -58,10 +57,10 @@ export const ProfileMenu = ({ name, email, handleLogout }: IProfileMenu) => {
       <Button
         type="text"
         size="large"
-        className="flex cursor-pointer items-center"
+        className="flex cursor-pointer items-center sm:text-sm md:text-base lg:text-xl"
       >
         <ProfileIcon color="#000" size={25} />
-        <div className="ml-1 text-xl">{name}</div>
+        <div className="ml-1 text-xl">{name} </div>
       </Button>
     </Dropdown>
   );
